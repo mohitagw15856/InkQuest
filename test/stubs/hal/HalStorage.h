@@ -1,6 +1,8 @@
 // Compile-check stub of the ecosystem HalStorage / HalFile surface that inkkit
 // wraps. Mirrors only the methods inkkit and InkQuest call; behaviour is inert.
-// Never linked into a firmware image.
+// It stands in for the missing freeink-sdk HAL so the firmware compiles and
+// links off hardware (host g++ compile-check and the PlatformIO ci env). It is
+// never part of a shippable device image; the real HAL is supplied on device.
 #pragma once
 
 #include <Arduino.h>
@@ -8,6 +10,21 @@
 #include <cstddef>
 #include <cstdint>
 #include <functional>
+
+// Open flags inkkit's Storage.cpp references. Guarded so the real Arduino /
+// newlib definitions win when present.
+#ifndef O_RDONLY
+#define O_RDONLY 0x0000
+#endif
+#ifndef O_WRONLY
+#define O_WRONLY 0x0001
+#endif
+#ifndef O_CREAT
+#define O_CREAT 0x0100
+#endif
+#ifndef O_APPEND
+#define O_APPEND 0x0008
+#endif
 
 // A file handle on the SD card. Real implementation is backed by SdFat.
 class HalFile {

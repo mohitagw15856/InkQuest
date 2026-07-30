@@ -24,7 +24,7 @@ out="$(mktemp -d)"
 trap 'rm -rf "$out"' EXIT
 
 flags=(-std=gnu++2a -Wall -Wextra -Werror -DARDUINO -c
-       -I"$stubs" -I"$INKKIT/src" -I"$root/src")
+       -I"$stubs" -I"$stubs/hal" -I"$INKKIT/src" -I"$root/src")
 
 units=(
   "$root/src/device/TextRenderer.cpp"

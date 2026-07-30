@@ -51,20 +51,26 @@ jobs:
         run: ./test/device/compile_check.sh
 
   firmware:
-    name: Firmware build (PlatformIO, on-hardware target)
+    name: Firmware build (PlatformIO, ESP32-C3 toolchain)
     runs-on: ubuntu-latest
-    # The device image needs the ecosystem freeink-sdk hardware libraries (the
-    # Hal* layer), which are not fetched here, so this real on-hardware build is
-    # allowed to fail without blocking the pipeline. The authoritative firmware
-    # verification is the device-compile job above, which compiles every
-    # ARDUINO-guarded translation unit against stub HAL headers.
-    continue-on-error: true
+    # Builds the firmware for the real esp32-c3 target with the espressif32
+    # toolchain, using the inert stub HAL in test/stubs/hal in place of the
+    # freeink-sdk hardware libraries (which are not fetched in CI). This proves
+    # the firmware compiles and links end to end; the shippable on-device image
+    # is `pio run -e xteink` with the real SDK. See docs/HARDWARE_TESTING.md.
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Cache PlatformIO
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.platformio
+            ~/.cache/pip
+          key: pio-${{ runner.os }}-${{ hashFiles('platformio.ini') }}
       - name: Install PlatformIO
         run: python -m pip install --upgrade platformio
-      - name: Build firmware
-        run: pio run -e xteink
+      - name: Build firmware (stub HAL)
+        run: pio run -e ci
