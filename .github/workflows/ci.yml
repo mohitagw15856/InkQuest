@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  companion:
+    name: Companion (pytest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install pytest
+        run: python -m pip install --upgrade pip pytest
+      - name: Run tests
+        working-directory: companion
+        run: python -m pytest -q
+      - name: Compile the demo story
+        working-directory: companion
+        run: |
+          python -m inkquest validate ../stories/the-lighthouse-keeper/the-lighthouse-keeper.twee
+          python -m inkquest compile ../stories/the-lighthouse-keeper/the-lighthouse-keeper.twee -o /tmp/demo.iqs
+          cmp /tmp/demo.iqs ../stories/the-lighthouse-keeper/the-lighthouse-keeper.iqs
+          echo "committed .iqs matches a fresh compile"
+
+  host-core:
+    name: Core unit tests (host C++)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Clone inkkit (device HAL dependency)
+        run: git clone --depth 1 https://github.com/mohitagw15856/inkkit.git ../Inkkit
+      - name: Build and run host tests
+        env:
+          INKKIT: ${{ github.workspace }}/../Inkkit
+        run: ./test/host/run.sh
+
+  device-compile:
+    name: Device layer compile check (stub HAL)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Clone inkkit (device HAL dependency)
+        run: git clone --depth 1 https://github.com/mohitagw15856/inkkit.git ../Inkkit
+      - name: Compile-check the ARDUINO device layer
+        env:
+          INKKIT: ${{ github.workspace }}/../Inkkit
+        run: ./test/device/compile_check.sh
+
+  firmware:
+    name: Firmware build (PlatformIO, on-hardware target)
+    runs-on: ubuntu-latest
+    # The device image needs the ecosystem freeink-sdk hardware libraries (the
+    # Hal* layer), which are not fetched here, so this real on-hardware build is
+    # allowed to fail without blocking the pipeline. The authoritative firmware
+    # verification is the device-compile job above, which compiles every
+    # ARDUINO-guarded translation unit against stub HAL headers.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install PlatformIO
+        run: python -m pip install --upgrade platformio
+      - name: Build firmware
+        run: pio run -e xteink
