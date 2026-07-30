@@ -1,0 +1,10 @@
+# InkQuest partition table for a 4 MB ESP32-C3 module.
+# The firmware is small (the story core streams from the SD card), so a single
+# large app partition plus a small NVS is ample. Adjust factory size to fit the
+# module actually fitted to the device.
+# Name,   Type, SubType, Offset,   Size
+nvs,      data, nvs,     0x9000,   0x5000
+otadata,  data, ota,     0xe000,   0x2000
+factory,  app,  factory, 0x10000,  0x300000
+spiffs,   data, spiffs,  0x310000, 0xE0000
+coredump, data, coredump,0x3f0000, 0x10000

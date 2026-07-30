@@ -1,0 +1,205 @@
+:: StoryTitle
+The Lighthouse Keeper's Lantern
+
+:: StoryData
+{
+  "ifid": "INKQUEST-LIGHTHOUSE-0001",
+  "format": "Harlowe",
+  "format-version": "3.3.0",
+  "start": "Arrival"
+}
+
+:: Setup [startup]
+(set: $courage to 1)
+(set: $lantern to false)
+(set: $key to false)
+(set: $code to false)
+(set: $saved to false)
+
+:: Arrival
+The boat leaves you on the black rocks of Saint Aldous Isle and does not linger. Above you the lighthouse stands white against a bruised sky, its lamp cold and dark. You are the new keeper, and the old one is a fortnight gone without a word.
+
+Rain begins. Somewhere out on the water a ship's bell is ringing, slow and frightened.
+
+[[Step into the keeper's cottage->Cottage]]
+[[Climb straight to the tower->TowerBase]]
+
+:: Cottage
+The cottage smells of tallow and cold ash. A kettle sits where its owner left it. Three doors lead off the little room, and a window frames the rising storm.
+
+[[The lantern room->LanternRoom]]
+[[The cellar stair->Cellar]]
+[[The keeper's desk->Logbook]]
+[[Out to the cliffs->Cliffs]]
+
+:: LanternRoom
+Hooks line the walls, most of them empty. On the last one hangs a storm lantern, its glass clean, its wick trimmed and ready. You lift it down and it fits your hand as though made for it.
+
+(set: $lantern to true)
+
+[[Back to the cottage->Cottage]]
+[[On to the tower->TowerBase]]
+
+:: Cellar
+The stair drops into damp dark. Barrels of oil crowd the walls. On a nail by the door hangs an iron key, red with rust but sound. Behind the furthest barrel the wall is not a wall at all, but a curtain of sailcloth.
+
+(set: $key to true)
+
+[[Back up to the cottage->Cottage]]
+[[Draw back the sailcloth->HiddenPassage]]
+
+:: Logbook
+The keeper's log is open at the last page. The hand grows wild toward the end. "The light must burn when the bell rings," it says, "or the reef will have them. The lamp answers to three turns, then two, then one." You commit the pattern to memory.
+
+(set: $code to true)
+(set: $courage to $courage + 1)
+
+[[Back to the cottage->Cottage]]
+[[Out to the cliffs->Cliffs]]
+
+:: Cliffs
+Wind flattens the grass and tugs at your coat. From here the whole coast is a line of teeth. The bell is louder now, and you can just make out a shape wallowing beyond the reef.
+
+[[Down to the beach->Beach]]
+[[To the storm watch->StormWatch]]
+[[Back to the cottage->Cottage]]
+
+:: Beach
+The sea throws itself at the shingle and drags it back with a growl. Timber and rope have already begun to wash in. The ship is closer, and closer still to the rocks.
+
+(if: $lantern)[A lantern would let them see the safe channel from here. [[Signal the ship->RescueAttempt]]](else:)[If only you had a light to signal with.]
+
+[[Back up to the cliffs->Cliffs]]
+
+:: StormWatch
+The storm watch is a railed platform bolted to the cliff. A brass speaking tube and an old wireless set share a shelf, both salted and stubborn.
+
+[[Try the wireless->RadioRoom]]
+[[Back to the cliffs->Cliffs]]
+
+:: RadioRoom
+You coax a thread of power from the set. Static, then a voice, thin and far: a coaster foundering on the Aldous reef, nine souls aboard, no light to steer by.
+
+[[Answer them->CallForHelp]]
+[[Back to the storm watch->StormWatch]]
+
+:: CallForHelp
+"Hold your course for the light," you tell them, though there is no light yet. Saying it steadies your own hands as much as theirs.
+
+(set: $courage to $courage + 1)
+
+[[Out into the gale->GoOutside]]
+[[Back to the set->RadioRoom]]
+
+:: GoOutside
+The gale nearly takes you off your feet. Salt stings your eyes. The tower is one way, the beach the other, and the sea will not wait long for you to choose.
+
+[[Down to the beach->Beach]]
+[[To the tower->TowerBase]]
+
+:: TowerBase
+The tower door groans open. A spiral stair winds up into the dark, and the cold air smells of oil and old iron.
+
+[[Climb the stair->TowerStairs]]
+[[Back to the cottage->Cottage]]
+
+:: TowerStairs
+Halfway up, a locked door bars the way to the lamp itself. A brass dial is set into it, worn smooth by generations of thumbs.
+
+(if: $code)[You know the pattern: three turns, then two, then one. [[Enter the signal room->SignalRoom]]](else:)[The dial wants a pattern you do not know. [[Search the keeper's desk->Logbook]]]
+
+[[Back down->TowerBase]]
+
+:: SignalRoom
+The signal room is all glass and brass, and at its heart the great lamp waits, unlit. Beyond the streaming windows the ship is a shadow among the breakers.
+
+(if: $lantern)[Your storm lantern will light the wick. [[Light the great lamp->LightSuccess]]](else:)[The lamp is dead and you have no flame to wake it.]
+
+[[Back down the stair->TowerStairs]]
+
+:: LightSuccess
+You touch flame to wick and the great lamp catches with a roar of light. The beam swings out across the water, steady and gold, and the reef is written plain upon the sea.
+
+[[Watch for the ship->FinalChoiceLight]]
+
+:: HiddenPassage
+Behind the sailcloth a passage has been cut through the rock, older than the tower. Names are scratched into the walls, keeper after keeper, back and back.
+
+[[Follow it inward->OldKeeperGhost]]
+[[Back to the cellar->Cellar]]
+
+:: OldKeeperGhost
+At the passage end sits the old keeper, or the memory of him, grey as sea fog. "I let a light go out once," he says without turning. "I have kept this dark ever since. Do not do as I did."
+
+[[Ask what you must do->GhostWarning]]
+[[Flee back toward the tower->TowerBase]]
+
+:: GhostWarning
+"Courage and a flame," the grey man says. "That is all it ever was. Take my key ring, and do not be as slow as I was." The fog of him thins and is gone, but you feel steadier for it.
+
+(set: $courage to $courage + 2)
+
+[[Take the sea gate key ring->LockedDoor]]
+[[Back down the passage->HiddenPassage]]
+
+:: LockedDoor
+The passage ends at a low iron gate that opens onto the shingle, level with the sea.
+
+(if: $key)[Your rusted key turns in the lock. [[Out through the sea gate->RescueAttempt]]](else:)[The gate is locked fast, and you have nothing that fits it.]
+
+[[Back toward the tower->TowerBase]]
+
+:: RescueAttempt
+You come out level with the churning sea. The coaster has struck, and figures cling to her rail not thirty yards off across the white water.
+
+(if: $lantern)[By the lantern's light you find the throwing line coiled on its post. [[Throw the rope->RopeChoice]]](else:)[In the dark you cannot tell water from rock, and dare not go closer.]
+
+[[Retreat to the beach->Beach]]
+
+:: RopeChoice
+The line snakes out and a sailor catches it. The rope goes taut as the sea tries to claim them both. Your arms burn at once.
+
+(if: $courage >= 3)[You set your heels and haul, and will not be moved. [[Brace and pull them in->SaveSailor]]](else:)[You are not strong enough alone, and the sea is stronger still. [[Hold on and hope->FailRescue]]]
+
+[[Let the line go->FailRescue]]
+
+:: SaveSailor
+Hand over hand you drag them through the surf and up the shingle, coughing and alive. One saved, and by their shouting there are more who now know where the shore is.
+
+(set: $saved to true)
+
+[[Get them to shelter->FinalChoiceLight]]
+
+:: FailRescue
+The rope tears from your hands and the sea closes over the place where the sailor was. You stand a long time in the rain before you can move at all.
+
+[[Wade after them into the dark water->Ending_LostAtSea]]
+[[Turn away and climb home->END]]
+
+:: FinalChoiceLight
+The storm is breaking. Out on the water the survivors are counting themselves, and the reef is quiet at last. What kind of keeper you are will be decided in the next hour.
+
+(if: $code and $lantern)[[[Keep the great lamp burning until the lifeboat comes->Ending_HeroicLight]]]
+(if: $saved)[[[Tend the rescued sailors through the night->Ending_QuietDawn]]]
+[[Keep a plain vigil until dawn->Ending_QuietDawn]]
+[[Let the lamp gutter and go to your bed->Ending_Darkness]]
+
+:: Ending_HeroicLight
+The lamp burns all night under your hand. By its light the mainland lifeboat finds the reef and takes off every soul. In the morning the island wakes to a keeper who kept the light, and the log gains a new line in a steady hand.
+
+[[The End->END]]
+
+:: Ending_QuietDawn
+You have no grand light to show, only your two hands and a stubborn will, but they prove enough. The dawn comes grey and gentle over survivors wrapped in your blankets, and that is its own kind of victory.
+
+[[The End->END]]
+
+:: Ending_Darkness
+You are too tired, or too afraid, and the flame gutters out. The reef keeps its silence and its secrets, and the isle stays dark. Perhaps another keeper will do better. Perhaps you will, tomorrow.
+
+[[The End->END]]
+
+:: Ending_LostAtSea
+The cold takes your breath and then your strength. The last thing you see is the dark shape of the tower, its lamp forever unlit above you. Saint Aldous keeps another name scratched upon its walls.
+
+[[The End->END]]

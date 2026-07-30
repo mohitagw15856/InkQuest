@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "inkquest"
+version = "0.1.0"
+description = "Compile and validate interactive fiction into the InkQuest .iqs format for the Xteink X4/X3."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "InkQuest contributors" }]
+keywords = ["interactive-fiction", "twine", "ink", "e-ink", "xteink", "esp32"]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.scripts]
+inkquest = "inkquest.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/mohitagw15856/inkquest"
+
+[tool.setuptools]
+packages = ["inkquest", "inkquest.compilers"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
