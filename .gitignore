@@ -1,0 +1,37 @@
+# PlatformIO
+.pio/
+.pioenvs/
+.piolibdeps/
+*.pio-nvm
+.cache/
+
+# Build artefacts
+*.o
+*.obj
+*.elf
+*.bin.tmp
+build/
+dist/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+.pytest_cache/
+.venv/
+venv/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+
+# Editors / OS
+.vscode/
+.idea/
+.clangd/
+.DS_Store
+Thumbs.db
+
+# The reference clone studied during design is never committed.
+/reference/
