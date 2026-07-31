@@ -4,7 +4,7 @@ The story core, the save format, word wrapping and the BMP decoder are all unit
 tested on the host, and the whole device layer is compile checked against stub
 HAL headers. The items below are the parts that can only be judged on a real
 Xteink X4/X3, either because they depend on the panel and buttons or because they
-depend on exact freeink-sdk behaviour. Each corresponds to a `TODO(hardware-test)`
+depend on exact device-layer behaviour. Each corresponds to a `TODO(hardware-test)`
 marker in the source.
 
 Work through this list on device and adjust the single marked location if the
@@ -35,7 +35,7 @@ hardware disagrees.
 ## Storage and power
 
 - [ ] **Storage init.** `src/main.cpp` does not call an explicit SD mount. Confirm
-      whether the freeink-sdk `Storage` singleton needs a `begin()`/mount before
+      whether the `Storage` singleton needs a `begin()`/mount before
       `setup()`, and add it if so.
 - [ ] **File close semantics.** `src/device/SaveStore.cpp` relies on `HalFile`
       flushing and closing on scope exit (the SDK build defines

@@ -36,6 +36,19 @@ class HalFile {
   int read(void* /*dst*/, size_t /*n*/) { return 0; }
   size_t write(const void* /*src*/, size_t n) { return n; }
   void close() { valid_ = false; }
+  // Directory iteration surface, mirroring the real vendored HalFile.
+  bool isOpen() const { return valid_; }
+  bool isDirectory() const { return false; }
+  void rewindDirectory() {}
+  HalFile openNextFile() {
+    HalFile f;
+    f.valid_ = false;
+    return f;
+  }
+  size_t getName(char* name, size_t len) {
+    if (len > 0) name[0] = '\0';
+    return 0;
+  }
 
  private:
   bool valid_ = true;
@@ -50,7 +63,6 @@ class HalStorageClass {
   HalFile open(const char*, int) { return HalFile(); }
   String readFile(const char*) { return String(); }
   bool writeFile(const char*, const String&) { return true; }
-  void listDir(const char*, const std::function<void(const char*, bool, size_t)>&) {}
 };
 
 // The SDK exposes this as a global singleton named `Storage`.
