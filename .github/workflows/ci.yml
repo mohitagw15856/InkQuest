@@ -31,8 +31,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Clone inkkit (device HAL dependency)
-        run: git clone --depth 1 https://github.com/mohitagw15856/inkkit.git ../Inkkit
+      - name: Clone inkkit (device HAL dependency, canonical pin)
+        run: git clone --depth 1 --branch v0.1.0-rc1 https://github.com/mohitagw15856/inkkit.git ../Inkkit
       - name: Build and run host tests
         env:
           INKKIT: ${{ github.workspace }}/../Inkkit
@@ -43,8 +43,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Clone inkkit (device HAL dependency)
-        run: git clone --depth 1 https://github.com/mohitagw15856/inkkit.git ../Inkkit
+      - name: Clone inkkit (device HAL dependency, canonical pin)
+        run: git clone --depth 1 --branch v0.1.0-rc1 https://github.com/mohitagw15856/inkkit.git ../Inkkit
       - name: Compile-check the ARDUINO device layer
         env:
           INKKIT: ${{ github.workspace }}/../Inkkit
@@ -53,11 +53,10 @@ jobs:
   firmware:
     name: Firmware build (PlatformIO, ESP32-C3 toolchain)
     runs-on: ubuntu-latest
-    # Builds the firmware for the real esp32-c3 target with the espressif32
-    # toolchain, using the inert stub HAL in test/stubs/hal in place of the
-    # freeink-sdk hardware libraries (which are not fetched in CI). This proves
-    # the firmware compiles and links end to end; the shippable on-device image
-    # is `pio run -e xteink` with the real SDK. See docs/HARDWARE_TESTING.md.
+    # Builds the shippable firmware for both Xteink targets. The complete
+    # device layer (real HAL + vendored SDK hardware libraries) comes from
+    # inkkit, pinned in platformio.ini; on-device behaviour is tracked in
+    # docs/HARDWARE_TESTING.md.
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -72,5 +71,21 @@ jobs:
           key: pio-${{ runner.os }}-${{ hashFiles('platformio.ini') }}
       - name: Install PlatformIO
         run: python -m pip install --upgrade platformio
-      - name: Build firmware (stub HAL)
-        run: pio run -e ci
+      # Environments build one at a time: pio package installs are not safe to
+      # run concurrently against a shared ~/.platformio.
+      - name: Build X4 firmware
+        run: pio run -e xteink_x4
+      - name: Build X3 firmware
+        run: pio run -e xteink_x3
+      - name: Upload X4 artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: inkquest-xteink_x4-firmware
+          path: .pio/build/xteink_x4/firmware.bin
+          if-no-files-found: error
+      - name: Upload X3 artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: inkquest-xteink_x3-firmware
+          path: .pio/build/xteink_x3/firmware.bin
+          if-no-files-found: error

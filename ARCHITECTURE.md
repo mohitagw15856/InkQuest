@@ -70,7 +70,7 @@ inkkit keeps its `ByteStream` interfaces free of any Arduino dependency.
                 +-------------------------------------------------+
                                    |  wraps
                                    v
-                     inkkit  ->  freeink-sdk (Hal* singletons)
+                     inkkit (vendors the Hal* layer + SDK hardware libraries)
 ```
 
 ### Portable core (`src/core`)
@@ -102,7 +102,7 @@ Everything here is guarded by `#ifdef ARDUINO` and built on inkkit:
 - `BmpCover` streams a cover BMP onto the panel.
 - `InkQuestApp` is the state machine: library screen, per story menu, reader and
   slot picker, with autosave on idle sleep.
-- `main.cpp` wires the freeink-sdk singletons (`display`, `gpio`, `powerManager`)
+- `main.cpp` wires the device-layer singletons (`display`, `gpio`, `powerManager`)
   into inkkit's wrappers and runs the Arduino `setup`/`loop`.
 
 ## Memory discipline

@@ -89,11 +89,11 @@ python3 -m inkquest compile story.json --from ink -o story.iqs
 ### 2. Flash the firmware (PlatformIO)
 
 ```sh
-pio run -e xteink -t upload      # build and flash over USB
+pio run -e xteink_x4 -t upload   # build and flash over USB (or -e xteink_x3)
 pio device monitor               # serial monitor at 115200
 ```
 
-The device build uses the freeink-sdk hardware libraries (the `Hal*` layer inkkit wraps), exactly like any inkkit firmware. See [platformio.ini](platformio.ini) and [docs/HARDWARE_TESTING.md](docs/HARDWARE_TESTING.md).
+The device build gets its complete device layer (the `Hal*` HAL and the vendored SDK hardware libraries) from [inkkit](https://github.com/mohitagw15856/inkkit), pinned in `platformio.ini`; the `xteink_x4` and `xteink_x3` environments build identical firmware with runtime device detection. See [platformio.ini](platformio.ini) and [docs/HARDWARE_TESTING.md](docs/HARDWARE_TESTING.md).
 
 ### 3. Put stories on the SD card
 
