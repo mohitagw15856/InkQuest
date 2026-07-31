@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="InkQuest logo: a branching path on an e-ink tile">
+  <defs>
+    <pattern id="dither" width="6" height="6" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="0.6" fill="#1a1a1a" opacity="0.10"/>
+    </pattern>
+  </defs>
+
+  <!-- e-ink tile / bezel -->
+  <rect x="12" y="12" width="216" height="216" rx="40" fill="#f5f1e8" stroke="#1a1a1a" stroke-width="10"/>
+  <rect x="12" y="12" width="216" height="216" rx="40" fill="url(#dither)"/>
+
+  <!-- branching path: one road that forks into a choice -->
+  <g fill="none" stroke="#1a1a1a" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M120 196 L120 140"/>
+    <path d="M120 140 C120 112, 78 118, 74 92"/>
+    <path d="M120 140 C120 112, 162 118, 166 92"/>
+  </g>
+
+  <!-- nodes -->
+  <g fill="#1a1a1a">
+    <circle cx="120" cy="196" r="13"/>
+    <circle cx="74" cy="86" r="15"/>
+    <circle cx="166" cy="86" r="15"/>
+  </g>
+  <!-- chosen node highlighted (inverted, like the reader's selection bar) -->
+  <circle cx="166" cy="86" r="15" fill="#f5f1e8" stroke="#1a1a1a" stroke-width="6"/>
+
+  <!-- ink drop at the start -->
+  <path d="M120 216 c-9 -12, -9 -20, 0 -28 c9 8, 9 16, 0 28 z" fill="#1a1a1a"/>
+</svg>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 312" width="300" height="312" role="img" aria-label="Animated preview of choosing a path in InkQuest">
+  <rect x="0" y="0" width="300" height="312" rx="24" fill="#262320"/>
+  <rect x="12" y="12" width="276" height="288" rx="8" fill="#f5f1e8"/>
+
+  <rect x="12" y="12" width="276" height="30" fill="#1a1a1a"/>
+  <text x="24" y="33" font-family="'DejaVu Sans Mono', monospace" font-size="14" fill="#f5f1e8">The Lighthouse Keeper</text>
+
+  <g font-family="'DejaVu Sans Mono', monospace" font-size="13" fill="#1a1a1a">
+    <text x="24" y="66">You stand at the gate of</text>
+    <text x="24" y="84">Saint Aldous, rain rising,</text>
+    <text x="24" y="102">a ship's bell out on the reef.</text>
+  </g>
+
+  <!-- moving selection bar (snaps between rows like real button presses) -->
+  <rect x="18" y="150" width="264" height="24" fill="#1a1a1a">
+    <animate attributeName="y" values="150;182;214;182" keyTimes="0;0.25;0.5;0.75"
+             dur="4s" calcMode="discrete" repeatCount="indefinite"/>
+  </rect>
+
+  <g font-family="'DejaVu Sans Mono', monospace" font-size="13">
+    <!-- row A -->
+    <text x="26" y="167" fill="#1a1a1a">&gt; Take the storm lantern</text>
+    <text x="26" y="167" fill="#f5f1e8">&gt; Take the storm lantern
+      <animate attributeName="opacity" values="1;0;0;0" keyTimes="0;0.25;0.5;0.75"
+               dur="4s" calcMode="discrete" repeatCount="indefinite"/>
+    </text>
+    <!-- row B -->
+    <text x="26" y="199" fill="#1a1a1a">&gt; Climb to the tower</text>
+    <text x="26" y="199" fill="#f5f1e8">&gt; Climb to the tower
+      <animate attributeName="opacity" values="0;1;0;1" keyTimes="0;0.25;0.5;0.75"
+               dur="4s" calcMode="discrete" repeatCount="indefinite"/>
+    </text>
+    <!-- row C -->
+    <text x="26" y="231" fill="#1a1a1a">&gt; Search the cellar</text>
+    <text x="26" y="231" fill="#f5f1e8">&gt; Search the cellar
+      <animate attributeName="opacity" values="0;0;1;0" keyTimes="0;0.25;0.5;0.75"
+               dur="4s" calcMode="discrete" repeatCount="indefinite"/>
+    </text>
+  </g>
+
+  <text x="24" y="266" font-family="Georgia, serif" font-style="italic" font-size="12" fill="#6a6a6a">Up / Down to choose, Select to go</text>
+
+  <g fill="#262320">
+    <circle cx="60" cy="288" r="6"/>
+    <circle cx="90" cy="288" r="6"/>
+    <circle cx="210" cy="288" r="6"/>
+    <circle cx="240" cy="288" r="6"/>
+  </g>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 312" width="300" height="312" role="img" aria-label="InkQuest save slot picker with three slots, one selected">
+  <rect x="0" y="0" width="300" height="312" rx="24" fill="#262320"/>
+  <rect x="12" y="12" width="276" height="288" rx="8" fill="#f5f1e8"/>
+
+  <rect x="12" y="12" width="276" height="30" fill="#1a1a1a"/>
+  <text x="24" y="33" font-family="'DejaVu Sans Mono', monospace" font-size="15" fill="#f5f1e8">Load a save</text>
+
+  <g font-family="'DejaVu Sans Mono', monospace" font-size="14">
+    <rect x="18" y="58" width="264" height="26" fill="#1a1a1a"/>
+    <text x="26" y="76" fill="#f5f1e8">Slot 1: passage 17</text>
+
+    <text x="26" y="112" fill="#1a1a1a">Slot 2: passage 5</text>
+    <text x="26" y="146" fill="#1a1a1a">Slot 3: empty</text>
+  </g>
+
+  <text x="26" y="196" font-family="'DejaVu Sans Mono', monospace" font-size="11" fill="#6a6a6a">auto  saved on sleep</text>
+  <rect x="18" y="206" width="264" height="1.5" fill="#c9c2b2"/>
+  <text x="26" y="232" font-family="'DejaVu Sans Mono', monospace" font-size="13" fill="#1a1a1a">Slot 0 (auto): passage 22</text>
+
+  <g fill="#262320">
+    <circle cx="60" cy="286" r="6"/>
+    <circle cx="90" cy="286" r="6"/>
+    <circle cx="210" cy="286" r="6"/>
+    <circle cx="240" cy="286" r="6"/>
+  </g>
+</svg>
